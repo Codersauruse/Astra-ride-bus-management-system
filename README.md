@@ -35,7 +35,7 @@ This platform allows users to view bus schedules, make bookings, complete paymen
                                          |
                                          v
                                    +------------+
-                                   |   Kafka    |
+                                   |   RabbitMq |
                                    |  (Events)  |
                                    +------------+
 ```
