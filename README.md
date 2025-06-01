@@ -76,6 +76,9 @@ This platform allows users to view bus schedules, make bookings, complete paymen
 - **Booking Service (.NET + MySQL):**  
   [booking-service](https://github.com/Codersauruse/booking-service)
 
+  - **User Service (.NET + MySQL):**  
+  [user-service](https://github.com/Codersauruse/user-service)
+
 - **Timetable Service (Spring Boot + MongoDB):**  
   [timetable-service](https://github.com/Codersauruse/timetable-service)
 
@@ -121,7 +124,7 @@ This platform allows users to view bus schedules, make bookings, complete paymen
 ## 🌍 How It Works
 
 1. **User Authentication:**  
-   Users sign in via Keycloak and receive JWT tokens.
+   Users sign in via Keycloak and receive JWT tokens and User registration handles by user service.
 
 2. **Timetable Viewing:**  
    Users fetch available busses for today via the Timetable Service.
@@ -144,6 +147,7 @@ This platform allows users to view bus schedules, make bookings, complete paymen
 
 - **Java (Spring Boot)**: Timetable, Payment, API Gateway, Config, Eureka
 - **.NET**: Booking Service
+- **.NET**: user Service
 - **Node.js**: Notification, Seat Services
 - **MongoDB/MySQL/PostgreSQL/Firestore**: Polyglot persistence
 - **Kafka**: Event bus
@@ -153,15 +157,22 @@ This platform allows users to view bus schedules, make bookings, complete paymen
 
 ## 🚀 Getting Started
 
-1. **Clone the repositories** for each microservice (links above).
-2. **Set up infrastructure**:  
-   - Start Eureka, Config Server, and Kafka.
-   - Set up databases (MongoDB, MySQL, PostgreSQL, Firestore).
-   - Deploy Keycloak and configure realms/clients.
-3. **Configure services** to connect to the Eureka server, Config server, and databases.
-4. **Run the API Gateway** and start exposing endpoints to clients.
-5. **Deploy each microservice** independently.
+### Prerequisites
 
+- Install [Docker](https://www.docker.com/products/docker-desktop/)
+- Install Git
+
+### Steps
+
+# 1. Clone the repository
+```bash
+git clone https://github.com/your-username/astraride.git
+cd astraride
+```
+# 2. Run with Docker Compose
+```bash
+docker-compose up --build
+```
 
 
 ## 📬 Contact
