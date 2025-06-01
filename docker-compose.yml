@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:5.7  
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: userDb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_fresh_data:/var/lib/mysql
+    networks:
+      - app-network
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  eureka-server:
+    image: codersaurus/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+    restart: on-failure
+
+  user-service:
+    image: codersaurus/user-service:latest
+    container_name: user-service
+    depends_on:
+      - mysql
+      - eureka-server
+    ports:
+      - "5089:8081"
+
+    environment:
+      ConnectionStrings__DefaultConnection: Server=mysql;Port=3306;Database=userDb;Uid=shehan;Pwd=shehan123;
+      Eureka__ServiceUrl: http://eureka-server:8761/eureka/
+    networks:
+      - app-network
+    restart: on-failure
+
+  timetable-service:
+    image: codersaurus/timetable-service:latest
+    container_name: timetable-service
+    depends_on:
+      - eureka-server
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    networks:
+      - app-network
+    restart: on-failure
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_fresh_data:
+
